@@ -59,8 +59,8 @@ class RCartController extends CController {
 			'success' => true,
 			'href' => $href,
 			'cart' => array(
-				'itemCount' => $this->module->getCount(),
-				'totalQuantity' => $this->module->getTotalQuantity(),
+				'count' => $this->module->getCount(),
+				'quantity' => $this->module->getQuantity(),
 				'total' => $this->module->getTotal(),
 				'totalWithoutDiscount' => $this->module->getTotal(false),
 				'widget' => $this->widget('RCartWidget', array(), true),

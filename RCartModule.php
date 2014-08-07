@@ -99,11 +99,11 @@ class RCartModule extends CWebModule {
 	public function getTotal($discount = true) {
 		$total = 0;
 		foreach($this->_items as $item)
-			$total += $item->getSumPrice($discount);
+			$total += $item->getTotalPrice($discount);
 		return $total;
 	}
 
-	public function getTotalQuantity() {
+	public function getQuantity() {
 		$total = 0;
 		foreach($this->_items as $item)
 			$total += $item->getQuantity();

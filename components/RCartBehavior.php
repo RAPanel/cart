@@ -28,7 +28,7 @@ class RCartBehavior extends CBehavior {
 		$this->_discount = $discount;
 	}
 
-	public function getSumPrice($discount = true) {
+	public function getTotalPrice($discount = true) {
 		return $this->getQuantity() * ($discount ? $this->getOwner()->getPrice() - $this->_discount : $this->getOwner()->getPrice());
 	}
 
