@@ -1,7 +1,7 @@
 RCartModule
 ==========
 
-Компонент для управления содержимым корзины, содержит все типичные виджеты. Создан на основе [EShoppingCart](https://github.com/yiiext/shopping-cart-component)
+Модуль для управления содержимым корзины, содержит все типичные виджеты. Создан на основе [EShoppingCart](https://github.com/yiiext/shopping-cart-component)
 
 Подключение
 ==========
