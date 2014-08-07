@@ -29,9 +29,9 @@ RCartModule
 * Подключить компонент RCartModule к приложению
 
 ```php
-	'components' => array(
+	'modules' => array(
         'cart' => array(
-	        'class' => 'ext._rere.components.RCartModule.RCartModule',
+	        'class' => 'application.modules.cart.RCartModule',
 	        'modelClass' => 'Product', //Класс модели донора
 	        'jsOptions' => array(
 	            'linkClass' => 'addToCart', // Класс ссылки для добавления/удаления
@@ -62,4 +62,16 @@ RCartModule
 
 * Кнопка "Добавить в корзину" добавляется виджетом RCartAddWidget. В теме легко можно переопределить её внешний вид
 
+```php
+// Лучше писать абсолютный путь т.к. если RCartModule не импортируется при инициализации приложения, короткий путь 'cart' будет недоступен
+$this->widget('application.modules.cart.widgets.RCartAddWidget', array(
+	'id' => $id,
+	'text' => $text,
+));
+```
+
 * Виждет корзины добавляется виджетом RCartWidget
+
+```php
+$this->widget('application.modules.cart.widgets.RCartWidget');
+```
