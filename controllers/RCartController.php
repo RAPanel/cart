@@ -7,8 +7,30 @@
  */
 class RCartController extends CController {
 
+	public function actionIndex() {
+		if(is_array($_POST['Quantity'])) {
+			foreach($_POST['Quantity'] as $itemId => $quantity) {
+				$item = $this->module->getCartModel($itemId);
+				$this->module->put($item, $quantity, false, true);
+			}
+			if(isset($_POST['process'])) {
+				$this->processToOrder();
+				Yii::app()->end(); // YOU SHALL NOT PASS!
+			}
+		}
+		$items = $this->module->getItems();
+		$dataProvider = $this->getDataProvider($items);
+		$this->render('index', compact('dataProvider'));
+	}
+
+	public function getDataProvider($items) {
+		return new CArrayDataProvider($items);
+	}
+
 	public function actionAdd($id, $quantity = 1) {
-		$model = $this->getModel($id);
+		$model = $this->module->getCartModel($id);
+		if(!$model)
+			$this->throwError(404);
 		if($this->module->addMode == RCartModule::MODE_REPLACE)
 			$this->module->put($model, $quantity);
 		else
@@ -17,19 +39,11 @@ class RCartController extends CController {
 	}
 
 	public function actionRemove($id) {
-		$model = $this->getModel($id);
+		$model = $this->module->getCartModel($id);
+		if(!$model)
+			$this->throwError(404);
 		$this->module->remove($model->id);
 		$this->success($id);
-	}
-
-	protected function getModel($id) {
-		$model = CActiveRecord::model($this->module->modelClass)->findByPk($id);
-		if(is_null($model) || !method_exists($model, 'getCartModel'))
-			$this->throwError(404);
-		$result = $model->getCartModel();
-		if(!is_object($result))
-			$this->throwError(404);
-		return $result;
 	}
 
 	protected function throwError($httpCode = 404) {
@@ -75,4 +89,11 @@ class RCartController extends CController {
 		echo CJSON::encode($data);
 	}
 
+	public function processToOrder() {
+		$total = $this->module->getTotal();
+		$totalWODiscount = $this->module->getTotal(false);
+		$discount = $total - $totalWODiscount;
+		$orderData = $this->module->getSerializedItems();
+		Yii::app()->getModule($this->module->orderModuleId)->beginProcessing($total, $discount, $orderData);
+	}
 }
