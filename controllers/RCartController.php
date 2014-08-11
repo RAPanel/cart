@@ -18,14 +18,9 @@ class RCartController extends CController {
 				Yii::app()->end(); // YOU SHALL NOT PASS!
 			}
 		}
-		$items = $this->module->getItems();
-		$dataProvider = $this->getDataProvider($items);
 		$this->render('index', compact('dataProvider'));
 	}
 
-	public function getDataProvider($items) {
-		return new CArrayDataProvider($items);
-	}
 
 	public function actionAdd($id, $quantity = 1) {
 		$model = $this->module->getCartModel($id);
