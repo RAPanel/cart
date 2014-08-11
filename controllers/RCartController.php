@@ -13,6 +13,7 @@ class RCartController extends CController {
 				$item = $this->module->getCartModel($itemId);
 				$this->module->put($item, $quantity, false, true);
 			}
+			$this->module->saveState();
 			if(isset($_POST['process'])) {
 				$this->processToOrder();
 				Yii::app()->end(); // YOU SHALL NOT PASS!

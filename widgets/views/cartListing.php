@@ -46,23 +46,27 @@ if (!$widget->form) {
 	unset($columns['remove']);
 }
 
-$this->widget('zii.widgets.grid.CGridView', array(
-	'dataProvider' => $dataProvider,
-	'columns' => $columns,
-));
-if ($this->total):
-	?>
-	<div class="total">
-		<?= Yii::t('order', 'Total') ?>: <?= $this->module->getFormattedPrice($this->module->getTotal()) ?>
-	</div>
-<?php
-endif;
-if ($this->form):
-	?>
-	<div class="buttons">
-		<input type="submit" name="recountPrice" value="<?= Yii::t('order', 'Recount price') ?>"/>
-		<input type="submit" name="process" value="<?= Yii::t('order', 'Process to order') ?>"/>
-	</div>
+if ($dataProvider->totalItemCount == 0) {
+	echo CHtml::tag('div', array('class' => 'empty-cart'), Yii::t('cart', 'Cart is empty'));
+} else {
+	$this->widget('zii.widgets.grid.CGridView', array(
+		'dataProvider' => $dataProvider,
+		'columns' => $columns,
+	));
+	if ($this->total):
+		?>
+		<div class="total">
+			<?= Yii::t('order', 'Total') ?>: <?= $this->module->getFormattedPrice($this->module->getTotal()) ?>
+		</div>
 	<?php
-	echo CHtml::endForm();
-endif;
+	endif;
+	if ($this->form):
+		?>
+		<div class="buttons">
+			<input type="submit" name="recountPrice" value="<?= Yii::t('order', 'Recount price') ?>"/>
+			<input type="submit" name="process" value="<?= Yii::t('order', 'Process to order') ?>"/>
+		</div>
+		<?php
+		echo CHtml::endForm();
+	endif;
+}

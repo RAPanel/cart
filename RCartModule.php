@@ -86,7 +86,6 @@ class RCartModule extends CWebModule
 			$item->detachBehaviors();
 			$result[$i]['model'] = $item;
 		}
-		$this->addBehavior($item);
 		$result = serialize($result);
 		foreach($this->_items as $item) {
 			$this->addBehavior($item);
