@@ -7,6 +7,7 @@ RCartModule
 ==========
 
 Чтобы избжать путанницы, определяю:
+
 * **Модель-донор** - модель, которую пользователь добавляет в корзину (например, на базе CActiveRecord)
 * **Модель данных** - модель, которая добавляется в корзину фактически.
 
@@ -48,7 +49,7 @@ RCartModule
 	            'loadingClass' => 'loading', // Класс, добавляемый к элементам при загрузке страницы
 	        ),
 	        'jsSuccessCallback' => '', // JS функция, вызываемая при успешном добавлении/удалении из корзины. Можно оставить пустым
-	        'addMode' => 'replace', // Метод, которым будет добавляться довар в случае если он уже есть в корзине (add или replace)
+	        'addMode' => 'replace', // Метод, которым будет добавляться товар в случае если он уже есть в корзине (add или replace)
         ),
     ),
 ```
@@ -69,8 +70,7 @@ RCartModule
 * Кнопка "Добавить в корзину" добавляется виджетом RCartAddWidget
 
 ```php
-// Лучше писать абсолютный путь т.к. если RCartModule не импортируется при инициализации приложения, короткий путь 'cart' будет недоступен
-$this->widget('application.modules.cart.widgets.RCartAddWidget', array(
+$this->widget('cart.widgets.RCartAddWidget', array(
 	'id' => $id,
 	'text' => $text,
 ));
@@ -79,5 +79,5 @@ $this->widget('application.modules.cart.widgets.RCartAddWidget', array(
 * Виждет корзины добавляется виджетом RCartWidget
 
 ```php
-$this->widget('application.modules.cart.widgets.RCartWidget');
+$this->widget('cart.widgets.RCartWidget');
 ```
